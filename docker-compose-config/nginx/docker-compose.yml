@@ -1,0 +1,13 @@
+version: '3'
+services:
+  nginx:
+    restart: always
+    image: nginx:1.17.3-alpine
+    network_mode: "host"
+    #ports:
+     # - 80:80
+      #- 443:443
+    volumes:
+      - /etc/nginx/conf.d:/etc/nginx/conf.d
+      - /var/log/nginx:/var/log/nginx
+      - /var/www:/var/www

@@ -1,0 +1,49 @@
+version: '3'
+services:
+  drone-server:
+    image: drone/drone:1
+    restart: always
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - /var/lib/drone:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DRONE_OPEN=true
+      - DRONE_SERVER_PROTO=https
+      - DRONE_TLS_AUTOCERT=true
+      - DRONE_SERVER_HOST=drone.vioao.site
+      - DRONE_RUNNER_CAPACITY=2
+      # 集成 GitHub 配置
+      - DRONE_GITHUB_SERVER=https://github.com
+      - DRONE_GITHUB_CLIENT_ID=${DRONE_GITHUB_CLIENT_ID}
+      - DRONE_GITHUB_CLIENT_SECRET=${DRONE_GITHUB_CLIENT_SECRET}
+      # 需要自行生成配置值
+      - DRONE_RPC_SECRET=${DRONE_RPC_SECRET}
+      # 配置日志输出
+      - DRONE_LOGS_DEBUG=true
+      - DRONE_LOGS_TEXT=true
+      - DRONE_LOGS_PRETTY=true
+      - DRONE_LOGS_COLOR=true
+      # 配置管理员
+      - DRONE_USER_CREATE=username:vioao,admin:true
+
+  drone-agent:
+    image: drone/agent:1
+    restart: always
+    depends_on:
+      - drone-server
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DRONE_RPC_SERVER=drone.vioao.site
+      # DRONE_RPC_SECRET 需要与 drone-server 中的一致
+      - DRONE_RPC_SECRET=${DRONE_RPC_SECRET}
+      - DRONE_RUNNER_CAPACITY=2
+      # 配置日志输出
+      - DRONE_LOGS_DEBUG=true
+      - DRONE_LOGS_TEXT=true
+      - DRONE_LOGS_PRETTY=true
+      - DRONE_LOGS_COLOR=true
+
