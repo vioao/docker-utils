@@ -8,5 +8,6 @@ For now, it contains below services:
 - drone
 
 Note:  
-All folders in `docker-compose-config` should be put in `/etc`  
-And then, just `cd` to the folder run cmd `docker-compose up -d`
+- All folders in `docker-compose-config` should be put in `/etc`  
+- You must install docker first by run the `./docker-installer.sh` shell. And then, just `cd` to the folder run cmd `docker-compose up -d`
+- If u want make your server more safer, pls run the `./firewall-config.sh` shell. Before doing this,u should edit the file to change the port u want to expose.
