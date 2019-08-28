@@ -1,4 +1,5 @@
-# docker-utils
+# Docker-Utils
+
 Personal docker utils & configs  
 It's useful when I start my services from zero.  
 For now, it contains below services:
@@ -7,5 +8,5 @@ For now, it contains below services:
 - drone
 
 Note:  
-All folders in docker-compose-config should be put in `/etc`  
+All folders in `docker-compose-config` should be put in `/etc`  
 And then, just `cd` to the folder run cmd `docker-compose up -d`
